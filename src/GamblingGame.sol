@@ -20,6 +20,7 @@ contract GamblingGame {
 
     event Deposit(address indexed user, uint256 amount, uint256 round);
     event WinnerChosen(address indexed winner, uint256 amount, uint256 round);
+    event RewardClaimed(address indexed winner, uint256 amount);
 
     constructor(IERC20 _token) {
         token = _token;
@@ -64,6 +65,7 @@ contract GamblingGame {
     function claimRewards() external {
         uint256 reward = rewards[msg.sender];
         require(reward > 0, "claimRewards::No rewards to claim");
+        emit RewardClaimed(msg.sender, reward);
         rewards[msg.sender] = 0;
         token.transfer(msg.sender, reward);
     }
