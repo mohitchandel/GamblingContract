@@ -12,7 +12,6 @@ contract GamblingGame {
         address[] players;
     }
     mapping(uint256 => RoundDetails) public roundDetails;
-
     mapping(address => uint256) public playerDeposit;
     mapping(uint256 => address) public roundWinner;
     mapping(address => uint256) public rewards;
