@@ -53,18 +53,17 @@ contract GamblingGame {
     function _chooseWinner() private {
         uint256 randomIndex = random();
         address winner = roundDetails[round].players[randomIndex];
-        uint256 totalAmount = roundDetails[round].totalAmount;
 
         roundWinner[round] = winner;
-        rewards[winner] += totalAmount;
+        rewards[winner] = roundDetails[round].totalAmount;
 
-        emit WinnerChosen(winner, totalAmount, round);
+        emit WinnerChosen(winner, roundDetails[round].totalAmount, round);
         round++;
     }
 
     function claimRewards() external {
         uint256 reward = rewards[msg.sender];
-        require(reward > 0, "No rewards to claim");
+        require(reward > 0, "claimRewards::No rewards to claim");
         rewards[msg.sender] = 0;
         token.transfer(msg.sender, reward);
     }
